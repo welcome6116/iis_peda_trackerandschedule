@@ -108,7 +108,7 @@
   /* SUMMARY CARDS */
   .summary-row {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 14px;
     margin: 28px 0 22px;
   }
@@ -133,6 +133,7 @@
     line-height: 1;
   }
   .summary-card .denom { font-size: 0.95rem; color: var(--grey); font-weight: 400; }
+  .summary-card .rate-pct { display: block; font-size: 0.82rem; color: var(--gold); font-weight: 600; margin-top: 4px; }
   .summary-card.green { border-left-color: var(--green); }
   .summary-card.green .number { color: var(--green); }
   .summary-card.gold { border-left-color: var(--gold); }
@@ -447,14 +448,10 @@
       </div>
       <div class="summary-card gold">
         <div class="label">全數已繳齊<br>Complete Submission</div>
-        <div class="number"><span id="complete-count">—</span><span class="denom" id="complete-denom"></span></div>
+        <div class="number"><span id="complete-count">—</span><span class="denom" id="complete-denom"></span><span class="rate-pct" id="complete-rate"></span></div>
         <div class="progress-bar-wrap"><div class="progress-bar" id="complete-bar" style="width:0%;background:var(--gold)"></div></div>
       </div>
-      <div class="summary-card gold" style="border-left-color:#7B4FBF">
-        <div class="label">全校繳交率<br>Overall Submission Rate</div>
-        <div class="number" style="color:#7B4FBF"><span id="rate-count">—</span><span class="denom">%</span></div>
-        <div class="progress-bar-wrap"><div class="progress-bar" id="rate-bar" style="width:0%;background:#7B4FBF"></div></div>
-      </div>
+
     </div>
 
     <div class="table-wrap">
@@ -494,7 +491,7 @@
 
     <div class="review-section">
       <div class="review-list">
-        <div class="review-list-header">📋 已確認複盤時間之處室 / Departments/Offices with Confirmed Review Appointments</div>
+        <div class="review-list-header">📋 已確認複盤時間之處室<br><span style="font-weight:400;font-size:0.75rem;opacity:0.85">Departments/Offices with Confirmed Review Appointments</span></div>
         <div id="review-list-body">
           <div class="review-empty">資料載入中… Loading…</div>
         </div>
@@ -692,8 +689,7 @@ function renderSubmission(data) {
   setCard('check-count','check-denom','check-bar', checkC);
   setCard('complete-count','complete-denom','complete-bar', completeC, 'gold');
   const rate = total > 0 ? Math.round(completeC/total*100) : 0;
-  document.getElementById('rate-count').textContent = rate;
-  document.getElementById('rate-bar').style.width = rate + '%';
+  document.getElementById('complete-rate').textContent = rate + '%';
 }
 
 function si(val) {
