@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>114年度個人資料盤點文件繳交追蹤及複盤時間</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root {
+    --navy: #1B2A4A;
+    --navy-mid: #2C3E6B;
+    --gold: #C8972A;
+    --gold-light: #F0D080;
+    --cream: #F7F5F0;
+    --white: #FFFFFF;
+    --green: #2E7D52;
+    --green-light: #E8F5EE;
+    --red: #C0392B;
+    --red-light: #FDECEA;
+    --grey: #8A9BB5;
+    --grey-light: #EEF1F6;
+    --text: #1B2A4A;
+    --text-sub: #5A6A85;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans TC', 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  header {
+    background: var(--navy);
+    padding: 28px 40px 24px;
+    border-bottom: 4px solid var(--gold);
+  }
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header-title h1 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.02em;
+    line-height: 1.35;
+  }
+  .header-title h2 {
+    font-size: 0.88rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    margin-top: 5px;
+  }
+  .header-meta { text-align: right; }
+  .cycle-badge {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--navy);
+    font-size: 0.73rem;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .updated { font-size: 0.78rem; color: var(--grey); }
+
+  .tabs {
+    max-width: 1280px;
+    margin: 28px auto 0;
+    padding: 0 40px;
+    display: flex;
+    gap: 8px;
+  }
+  .tab-btn {
+    padding: 10px 24px;
+    border: 2px solid var(--navy-mid);
+    background: transparent;
+    color: var(--navy-mid);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .tab-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .tab-btn:hover:not(.active) { background: var(--grey-light); }
+
+  main {
+    max-width: 1280px;
+    margin: 0 auto 60px;
+    padding: 0 40px;
+  }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* SUMMARY CARDS */
+  .summary-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin: 28px 0 22px;
+  }
+  .summary-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 16px 18px;
+    border-left: 4px solid var(--navy-mid);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  }
+  .summary-card .label {
+    font-size: 0.72rem;
+    color: var(--text-sub);
+    font-weight: 500;
+    line-height: 1.45;
+    margin-bottom: 8px;
+  }
+  .summary-card .number {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1;
+  }
+  .summary-card .denom { font-size: 0.95rem; color: var(--grey); font-weight: 400; }
+  .summary-card.green { border-left-color: var(--green); }
+  .summary-card.green .number { color: var(--green); }
+  .summary-card.gold { border-left-color: var(--gold); }
+  .summary-card.gold .number { color: var(--gold); }
+  .progress-bar-wrap {
+    background: var(--grey-light);
+    border-radius: 4px;
+    height: 5px;
+    margin-top: 10px;
+    overflow: hidden;
+  }
+  .progress-bar { height: 100%; border-radius: 4px; background: var(--green); transition: width 0.4s ease; }
+
+  /* TABLE */
+  .table-wrap {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--navy); color: var(--white); }
+  thead th {
+    padding: 13px 14px;
+    text-align: left;
+    font-size: 0.76rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+  thead th.center { text-align: center; }
+  tbody tr { border-bottom: 1px solid var(--grey-light); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: #F0F4FA; }
+  tbody tr.complete { background: #F4FBF7; }
+  tbody tr.complete:hover { background: #EBF5EE; }
+  tbody td { padding: 12px 14px; font-size: 0.84rem; vertical-align: middle; }
+  tbody td.center { text-align: center; }
+
+  .unit-cn { font-weight: 600; color: var(--navy); font-size: 0.88rem; }
+  .unit-en { font-size: 0.72rem; color: var(--text-sub); margin-top: 2px; }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 0.82rem;
+  }
+  .status.yes { background: var(--green-light); color: var(--green); }
+  .status.no  { background: var(--red-light); color: var(--red); }
+
+  .date-chip {
+    display: inline-block;
+    background: var(--grey-light);
+    color: var(--text-sub);
+    font-size: 0.76rem;
+    padding: 3px 9px;
+    border-radius: 12px;
+    white-space: nowrap;
+  }
+  .date-chip.filled { background: #EBF3FC; color: #1A6BAA; font-weight: 600; }
+  .no-date { color: var(--grey); font-size: 0.76rem; }
+
+  .remark-text { font-size: 0.76rem; color: var(--text-sub); max-width: 180px; }
+  .remark-empty { color: var(--grey-light); font-size: 0.76rem; }
+
+  /* DATA NOTE */
+  .data-note {
+    margin-top: 18px;
+    padding: 11px 16px;
+    background: #EBF3FC;
+    border-left: 3px solid #1A6BAA;
+    border-radius: 6px;
+    font-size: 0.76rem;
+    color: #1A4A7A;
+    line-height: 1.65;
+  }
+
+  /* REVIEW TAB */
+  .review-notice {
+    margin: 24px 0 20px;
+    padding: 14px 18px;
+    background: var(--white);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    font-size: 0.84rem;
+    line-height: 1.75;
+    color: var(--text);
+  }
+  .review-notice strong { color: var(--navy); }
+  .review-notice .red-note { color: var(--red); font-weight: 600; }
+
+  .review-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  /* REVIEW LIST */
+  .review-list {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .review-list-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 13px 18px;
+    font-size: 0.83rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .review-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 18px;
+    border-bottom: 1px solid var(--grey-light);
+    transition: background 0.1s;
+  }
+  .review-item:last-child { border-bottom: none; }
+  .review-item:hover { background: #F0F4FA; }
+  .review-date-block {
+    min-width: 50px;
+    text-align: center;
+    background: var(--navy-mid);
+    border-radius: 8px;
+    padding: 6px 8px;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .review-date-block .month { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.06em; opacity: 0.8; }
+  .review-date-block .day  { font-size: 1.35rem; font-weight: 700; line-height: 1; }
+  .review-item-info .unit-name-cn { font-weight: 600; font-size: 0.86rem; }
+  .review-item-info .unit-name-en { font-size: 0.71rem; color: var(--text-sub); margin-top: 2px; }
+  .review-item-info .review-time {
+    display: inline-block;
+    margin-top: 5px;
+    background: var(--navy);
+    color: var(--white);
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 2px 10px;
+    border-radius: 12px;
+    letter-spacing: 0.03em;
+  }
+  .review-item-info .review-note-text { font-size: 0.71rem; color: var(--gold); margin-top: 3px; }
+  .review-empty { padding: 28px 18px; text-align: center; color: var(--grey); font-size: 0.84rem; }
+
+  /* CALENDAR */
+  .calendar-wrap {
+    background: var(--white);
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+    overflow: hidden;
+  }
+  .cal-header {
+    background: var(--navy);
+    padding: 13px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .cal-title { font-size: 0.92rem; font-weight: 600; color: var(--white); }
+  .cal-nav { display: flex; gap: 6px; }
+  .cal-nav button {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: var(--white);
+    width: 27px; height: 27px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+  }
+  .cal-nav button:hover { background: rgba(255,255,255,0.28); }
+  .cal-grid { padding: 14px; }
+  .cal-days-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    margin-bottom: 6px;
+  }
+  .cal-day-label {
+    text-align: center;
+    font-size: 0.67rem;
+    font-weight: 700;
+    color: var(--text-sub);
+    padding: 3px 0;
+  }
+  .cal-cells {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+  }
+  .cal-cell {
+    min-height: 44px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 2px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    cursor: default;
+  }
+  .cal-cell .cell-date { font-weight: 600; font-size: 0.8rem; }
+  .cal-cell.today { background: var(--navy); color: var(--white); font-weight: 700; }
+  .cal-cell.has-event { background: var(--green-light); cursor: pointer; }
+  .cal-cell.has-event:hover { background: #C8E6D0; }
+  .cal-cell.blocked { background: var(--red-light); }
+  .cal-cell.blocked .cell-date { color: var(--red); font-weight: 700; }
+  .cal-cell.has-event.blocked { background: #fddede; }
+  .event-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green); margin-top: 3px; }
+  .event-label {
+    font-size: 0.58rem;
+    color: var(--green);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    margin-top: 1px;
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 0 2px;
+  }
+  .blocked-x { font-size: 0.65rem; color: var(--red); margin-top: 2px; }
+
+  /* CALENDAR LEGEND */
+  .cal-legend {
+    display: flex;
+    gap: 16px;
+    padding: 10px 14px 14px;
+    flex-wrap: wrap;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 0.72rem; color: var(--text-sub); }
+  .legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
+  .legend-dot.green { background: var(--green-light); border: 1.5px solid var(--green); }
+  .legend-dot.red   { background: var(--red-light);   border: 1.5px solid var(--red); }
+
+  @media (max-width: 1000px) {
+    .review-section { grid-template-columns: 1fr; }
+    .summary-row { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 700px) {
+    header { padding: 18px 18px 16px; }
+    .tabs, main { padding: 0 16px; }
+    .summary-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .header-inner { flex-direction: column; align-items: flex-start; }
+    .header-meta { text-align: left; }
+  }
+  @media print {
+    body { background: white; }
+    .tabs { display: none; }
+    .tab-panel { display: block !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-title">
+      <h1>114年度個人資料盤點文件繳交追蹤及複盤時間</h1>
+      <h2>2026 Personal Data Inventory Submission Tracker &amp; Review Schedule</h2>
+    </div>
+    <div class="header-meta">
+      <div class="cycle-badge">自盤期間 Self-Audit Period · June 2026</div>
+      <div class="updated" id="last-updated">資料載入中… Loading data…</div>
+    </div>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="switchTab('submission', this)">
+    📋 繳交狀況 / Submission Status
+  </button>
+  <button class="tab-btn" onclick="switchTab('review', this)">
+    📅 複盤時間 / Review Schedule
+  </button>
+</div>
+
+<main>
+
+  <!-- TAB 1: SUBMISSION -->
+  <div id="tab-submission" class="tab-panel active">
+
+    <div class="summary-row">
+      <div class="summary-card">
+        <div class="label">追蹤單位總數<br>Total Units Tracked</div>
+        <div class="number" id="total-units">—</div>
+      </div>
+      <div class="summary-card green">
+        <div class="label">個資清冊（Excel）<br>Inventory Form (Excel)</div>
+        <div class="number"><span id="excel-count">—</span><span class="denom" id="excel-denom"></span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="excel-bar" style="width:0%"></div></div>
+      </div>
+      <div class="summary-card green">
+        <div class="label">個資清冊（紙本）<br>Inventory Form (Hard Copy)</div>
+        <div class="number"><span id="paper-count">—</span><span class="denom" id="paper-denom"></span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="paper-bar" style="width:0%"></div></div>
+      </div>
+      <div class="summary-card green">
+        <div class="label">自我檢查表（紙本）<br>Self-Assessment (Hard Copy)</div>
+        <div class="number"><span id="check-count">—</span><span class="denom" id="check-denom"></span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="check-bar" style="width:0%"></div></div>
+      </div>
+      <div class="summary-card gold">
+        <div class="label">全數已繳齊<br>Complete Submission</div>
+        <div class="number"><span id="complete-count">—</span><span class="denom" id="complete-denom"></span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="complete-bar" style="width:0%;background:var(--gold)"></div></div>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="submission-table">
+        <thead>
+          <tr>
+            <th>單位 / Unit</th>
+            <th class="center">個資清冊（Excel）<br>Inventory Form (Excel)</th>
+            <th class="center">個資清冊（紙本）<br>Inventory Form (Hard Copy)</th>
+            <th class="center">自我檢查表（紙本）<br>Self-Assessment (Hard Copy)</th>
+            <th class="center">HRO 收件日期<br>Date Received by HRO</th>
+            <th>備註 / Remarks</th>
+          </tr>
+        </thead>
+        <tbody id="submission-tbody">
+          <tr><td colspan="6" style="text-align:center;padding:30px;color:var(--grey)">資料載入中… Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="data-note">
+      ℹ️ 資料來源：Google 試算表，每次開啟頁面時自動更新。如資料顯示有誤，請聯繫人事室。<br>
+      Data source: Google Sheets, refreshed automatically on each page load. For corrections, please contact the Human Resources Office (HRO).
+    </div>
+  </div>
+
+  <!-- TAB 2: REVIEW SCHEDULE -->
+  <div id="tab-review" class="tab-panel">
+
+    <div class="review-notice">
+      <strong>📌 說明 / Notice</strong><br>
+      本預約表僅顯示該處室已跟 Sam 確認複盤時間之名單，每次預計先以半小時為主。<br>
+      This schedule only displays units that have <strong>confirmed</strong> their review appointment with Sam. Each session is approximately <strong>30 minutes</strong>.<br><br>
+      <span class="red-note">⚠️ 月曆中以紅色標示之日期，Sam 不在學校，請勿預約該日期。</span><br>
+      <span class="red-note">Dates highlighted in red on the calendar indicate Sam is unavailable. Please do not schedule on those dates.</span>
+    </div>
+
+    <div class="review-section">
+      <div class="review-list">
+        <div class="review-list-header">📋 已確認複盤名單 / Confirmed Review Appointments</div>
+        <div id="review-list-body">
+          <div class="review-empty">資料載入中… Loading…</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="calendar-wrap">
+          <div class="cal-header">
+            <div class="cal-title" id="cal-title">— 年 — 月</div>
+            <div class="cal-nav">
+              <button onclick="changeMonth(-1)">&#8249;</button>
+              <button onclick="changeMonth(1)">&#8250;</button>
+            </div>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-days-header">
+              <div class="cal-day-label">日 SUN</div>
+              <div class="cal-day-label">一 MON</div>
+              <div class="cal-day-label">二 TUE</div>
+              <div class="cal-day-label">三 WED</div>
+              <div class="cal-day-label">四 THU</div>
+              <div class="cal-day-label">五 FRI</div>
+              <div class="cal-day-label">六 SAT</div>
+            </div>
+            <div class="cal-cells" id="cal-cells"></div>
+          </div>
+          <div class="cal-legend">
+            <div class="legend-item"><div class="legend-dot green"></div>已預約複盤 Appointment scheduled</div>
+            <div class="legend-item"><div class="legend-dot red"></div>不可預約 Unavailable</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-note" style="margin-top:20px">
+      ℹ️ 複盤期間：115年7月1日至8月31日。如需調整時間，請提前告知人事室。<br>
+      Review period: July 1 – August 31, 2026. Please notify HRO in advance if you need to reschedule.
+    </div>
+  </div>
+
+</main>
+
+<script>
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const SHEET_ID = '1hB5y-nVUnES0et5QIieKayWO_0p-CoO3_FVN22Kka0w';
+const SUBMISSION_SHEET = 'Sheet1_繳交狀況';
+const REVIEW_SHEET     = 'Sheet2_複盤預約';
+const BLOCKED_SHEET    = 'Sheet3_不可預約日';
+
+// ============================================================
+// UNIT LIST
+// ============================================================
+const UNITS = [
+  { cn: '校長室',         en: 'Principal Office' },
+  { cn: '國際課程總監室', en: 'International Headmaster Office' },
+  { cn: '執行顧問室',     en: 'Executive Consultant Office' },
+  { cn: '行政營運長室',   en: 'Chief Operating Officer Office' },
+  { cn: '行政內控室',     en: 'Operational Internal Control Division' },
+  { cn: '研發視導中心',   en: 'Research, Development and Supervision Center' },
+  { cn: 'STEM 教育中心',  en: 'STEM Education Center' },
+  { cn: '雙語中學部',     en: 'Secondary Bilingual Department' },
+  { cn: '國際中學部',     en: 'International Secondary Department' },
+  { cn: '國小部',         en: 'Primary Department' },
+  { cn: '輔導室',         en: 'Counseling Office' },
+  { cn: '學務處',         en: 'Student Affairs Office' },
+  { cn: '總務處',         en: 'General Affairs Office' },
+  { cn: '圖書科技處',     en: 'Library & Technology Office' },
+  { cn: '發展事務處',     en: 'Advancement Office' },
+  { cn: '會計室',         en: 'Accounting Office' },
+  { cn: '人事室',         en: 'Human Resources Office' },
+];
+
+// ============================================================
+// DEMO DATA
+// ============================================================
+const DEMO_SUBMISSION = [
+  { cn:'校長室',         excel:true,  paper:true,  checklist:true,  date:'2026/06/10', remark:'' },
+  { cn:'國際課程總監室', excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'執行顧問室',     excel:true,  paper:false, checklist:false, date:'',           remark:'紙本待補交' },
+  { cn:'行政營運長室',   excel:true,  paper:true,  checklist:true,  date:'2026/06/12', remark:'' },
+  { cn:'行政內控室',     excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'研發視導中心',   excel:true,  paper:true,  checklist:false, date:'',           remark:'檢查表遺漏簽名，退回重送' },
+  { cn:'STEM 教育中心',  excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'雙語中學部',     excel:true,  paper:true,  checklist:true,  date:'2026/06/09', remark:'' },
+  { cn:'國際中學部',     excel:true,  paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'國小部',         excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'輔導室',         excel:true,  paper:true,  checklist:true,  date:'2026/06/11', remark:'' },
+  { cn:'學務處',         excel:true,  paper:true,  checklist:false, date:'',           remark:'' },
+  { cn:'總務處',         excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'圖書科技處',     excel:true,  paper:true,  checklist:true,  date:'2026/06/08', remark:'' },
+  { cn:'發展事務處',     excel:true,  paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'會計室',         excel:false, paper:false, checklist:false, date:'',           remark:'' },
+  { cn:'人事室',         excel:true,  paper:true,  checklist:true,  date:'2026/06/05', remark:'' },
+];
+
+const DEMO_REVIEW = [
+  { cn:'圖書科技處', en:'Library & Technology Office',         date:'2026/07/03', time:'10:00', note:'' },
+  { cn:'人事室',     en:'Human Resources Office',              date:'2026/07/05', time:'14:00', note:'' },
+  { cn:'校長室',     en:'Principal Office',                    date:'2026/07/08', time:'09:30', note:'' },
+  { cn:'雙語中學部', en:'Secondary Bilingual Department',      date:'2026/07/10', time:'10:00', note:'' },
+  { cn:'學務處',     en:'Student Affairs Office',              date:'2026/07/10', time:'14:30', note:'' },
+  { cn:'輔導室',     en:'Counseling Office',                   date:'2026/07/15', time:'11:00', note:'' },
+  { cn:'行政營運長室',en:'Chief Operating Officer Office',     date:'2026/07/22', time:'10:00', note:'' },
+  { cn:'國際中學部', en:'International Secondary Department',  date:'2026/08/05', time:'09:00', note:'' },
+];
+
+const DEMO_BLOCKED = [
+  { date:'2026/07/14', reason:'出差' },
+  { date:'2026/07/15', reason:'出差' },
+  { date:'2026/07/20', reason:'' },
+  { date:'2026/08/11', reason:'出差' },
+  { date:'2026/08/12', reason:'出差' },
+];
+
+// ============================================================
+// STATE
+// ============================================================
+let calYear = 2026, calMonth = 6; // July = index 6
+let reviewData   = [];
+let blockedDates = new Set();
+
+// ============================================================
+// FETCH GOOGLE SHEET
+// ============================================================
+async function fetchSheet(sheetName) {
+  const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(sheetName)}`;
+  const res  = await fetch(url);
+  const text = await res.text();
+  return JSON.parse(text.substring(47).slice(0, -2)).table;
+}
+
+function parseBool(v) {
+  if (!v && v !== 0) return false;
+  const s = String(v).trim().toLowerCase();
+  return s === 'true' || s === '是' || s === 'yes' || s === '✓' || s === '1';
+}
+
+function normaliseDate(v) {
+  if (!v) return '';
+  // Google Sheets returns dates like "Date(2026,5,10)" via gviz
+  if (typeof v === 'string' && v.startsWith('Date(')) {
+    const parts = v.slice(5,-1).split(',');
+    const y = parts[0], m = String(Number(parts[1])+1).padStart(2,'0'), d = String(parts[2]).padStart(2,'0');
+    return `${y}/${m}/${d}`;
+  }
+  return String(v).trim();
+}
+
+// ============================================================
+// RENDER SUBMISSION
+// ============================================================
+function renderSubmission(data) {
+  const tbody = document.getElementById('submission-tbody');
+  tbody.innerHTML = '';
+  const total = data.length;
+  let excelC=0, paperC=0, checkC=0, completeC=0;
+
+  data.forEach(row => {
+    if (row.excel)     excelC++;
+    if (row.paper)     paperC++;
+    if (row.checklist) checkC++;
+    const complete = row.excel && row.paper && row.checklist;
+    if (complete) completeC++;
+
+    const unit = UNITS.find(u => u.cn === row.cn);
+    const enName = unit ? unit.en : '';
+
+    const tr = document.createElement('tr');
+    if (complete) tr.classList.add('complete');
+    tr.innerHTML = `
+      <td>
+        <div class="unit-cn">${row.cn}</div>
+        <div class="unit-en">${enName}</div>
+      </td>
+      <td class="center">${si(row.excel)}</td>
+      <td class="center">${si(row.paper)}</td>
+      <td class="center">${si(row.checklist)}</td>
+      <td class="center">${row.date ? `<span class="date-chip filled">${row.date}</span>` : '<span class="no-date">—</span>'}</td>
+      <td><span class="${row.remark ? 'remark-text' : 'remark-empty'}">${row.remark || '—'}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  const setCard = (idN, idD, idB, count, cls) => {
+    document.getElementById(idN).textContent = count;
+    document.getElementById(idD).textContent = ` / ${total}`;
+    document.getElementById(idB).style.width = `${Math.round(count/total*100)}%`;
+    if (cls === 'gold') document.getElementById(idB).style.background = 'var(--gold)';
+  };
+  document.getElementById('total-units').textContent = total;
+  setCard('excel-count','excel-denom','excel-bar', excelC);
+  setCard('paper-count','paper-denom','paper-bar', paperC);
+  setCard('check-count','check-denom','check-bar', checkC);
+  setCard('complete-count','complete-denom','complete-bar', completeC, 'gold');
+}
+
+function si(val) {
+  return val
+    ? '<span class="status yes">✓</span>'
+    : '<span class="status no">✗</span>';
+}
+
+// ============================================================
+// RENDER REVIEW LIST
+// ============================================================
+function renderReviewList(data) {
+  const body = document.getElementById('review-list-body');
+  if (!data || data.length === 0) {
+    body.innerHTML = '<div class="review-empty">尚無已確認之複盤預約<br>No confirmed appointments yet</div>';
+    return;
+  }
+  const sorted = [...data].sort((a,b) => new Date(a.date) - new Date(b.date));
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  body.innerHTML = sorted.map(r => {
+    const d = new Date(r.date.replace(/\//g,'-'));
+    return `
+      <div class="review-item">
+        <div class="review-date-block">
+          <div class="month">${MONTHS[d.getMonth()]}</div>
+          <div class="day">${d.getDate()}</div>
+        </div>
+        <div class="review-item-info">
+          <div class="unit-name-cn">${r.cn}</div>
+          <div class="unit-name-en">${r.en}</div>
+          ${r.time ? `<div class="review-time">🕐 ${r.time}</div>` : ''}
+          ${r.note ? `<div class="review-note-text">📝 ${r.note}</div>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ============================================================
+// CALENDAR
+// ============================================================
+function renderCalendar() {
+  const MONTHS_CN = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('cal-title').textContent = `${calYear}年 ${MONTHS_CN[calMonth]}`;
+
+  const firstDay   = new Date(calYear, calMonth, 1).getDay();
+  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  const today      = new Date();
+
+  // Events by day
+  const eventsByDay = {};
+  reviewData.forEach(r => {
+    const d = new Date(r.date.replace(/\//g,'-'));
+    if (d.getFullYear()===calYear && d.getMonth()===calMonth) {
+      const day = d.getDate();
+      if (!eventsByDay[day]) eventsByDay[day] = [];
+      eventsByDay[day].push(r);
+    }
+  });
+
+  // Blocked by day (Set of "YYYY/MM/DD")
+  const cells = document.getElementById('cal-cells');
+  cells.innerHTML = '';
+
+  for (let i=0; i<firstDay; i++) {
+    const e = document.createElement('div');
+    e.className = 'cal-cell empty';
+    cells.appendChild(e);
+  }
+
+  for (let d=1; d<=daysInMonth; d++) {
+    const dateStr = `${calYear}/${String(calMonth+1).padStart(2,'0')}/${String(d).padStart(2,'0')}`;
+    const cell    = document.createElement('div');
+    cell.className = 'cal-cell';
+
+    const isToday   = today.getFullYear()===calYear && today.getMonth()===calMonth && today.getDate()===d;
+    const isBlocked = blockedDates.has(dateStr);
+    const events    = eventsByDay[d];
+
+    if (isToday)   cell.classList.add('today');
+    if (isBlocked) cell.classList.add('blocked');
+    if (events)    cell.classList.add('has-event');
+
+    let inner = `<span class="cell-date">${d}</span>`;
+    if (isBlocked && !isToday) inner += `<span class="blocked-x">✕</span>`;
+    if (events) {
+      const label = events.map(e => e.cn.replace(/室|處|部|中心/g,'')).join(' ');
+      inner += `<div class="event-dot"></div><div class="event-label">${label}</div>`;
+      cell.title = events.map(e => `${e.cn} ${e.time}`).join('\n');
+    }
+    cell.innerHTML = inner;
+    cells.appendChild(cell);
+  }
+}
+
+function changeMonth(dir) {
+  calMonth += dir;
+  if (calMonth>11) { calMonth=0; calYear++; }
+  if (calMonth<0)  { calMonth=11; calYear--; }
+  renderCalendar();
+}
+
+// ============================================================
+// TABS
+// ============================================================
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ============================================================
+// INIT
+// ============================================================
+async function init() {
+  const updatedEl = document.getElementById('last-updated');
+  const now = new Date();
+
+  try {
+    // Sheet1: submission
+    const subTable = await fetchSheet(SUBMISSION_SHEET);
+    const subRows  = subTable.rows.map(r => ({
+      cn:        r.c[0]?.v || '',
+      excel:     parseBool(r.c[2]?.v),
+      paper:     parseBool(r.c[3]?.v),
+      checklist: parseBool(r.c[4]?.v),
+      date:      normaliseDate(r.c[5]?.v),
+      remark:    r.c[6]?.v || '',
+    })).filter(r => r.cn);
+    renderSubmission(subRows);
+
+    // Sheet2: review
+    const revTable = await fetchSheet(REVIEW_SHEET);
+    reviewData = revTable.rows.map(r => ({
+      cn:   r.c[0]?.v || '',
+      en:   r.c[1]?.v || '',
+      date: normaliseDate(r.c[2]?.v),
+      time: r.c[3]?.v || '',
+      note: r.c[4]?.v || '',
+    })).filter(r => r.cn && r.date);
+    renderReviewList(reviewData);
+
+    // Sheet3: blocked dates
+    const blkTable = await fetchSheet(BLOCKED_SHEET);
+    blockedDates = new Set(blkTable.rows
+      .map(r => normaliseDate(r.c[0]?.v))
+      .filter(Boolean));
+
+    updatedEl.textContent = `上次更新 Last updated: ${now.toLocaleDateString('zh-TW')} ${now.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})}`;
+  } catch(e) {
+    console.error(e);
+    updatedEl.textContent = '❌ 資料載入失敗，請重新整理頁面 Failed to load — please refresh';
+  }
+
+  renderCalendar();
+}
+init();
+</script>
+</body>
+</html>
