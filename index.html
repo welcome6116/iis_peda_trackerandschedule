@@ -108,7 +108,7 @@
   /* SUMMARY CARDS */
   .summary-row {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 14px;
     margin: 28px 0 22px;
   }
@@ -427,7 +427,7 @@
 
     <div class="summary-row">
       <div class="summary-card">
-        <div class="label">追蹤單位總數<br>Total Units Tracked</div>
+        <div class="label">追蹤單位總數<br>Total Departments/Offices Tracked</div>
         <div class="number" id="total-units">—</div>
       </div>
       <div class="summary-card green">
@@ -450,18 +450,23 @@
         <div class="number"><span id="complete-count">—</span><span class="denom" id="complete-denom"></span></div>
         <div class="progress-bar-wrap"><div class="progress-bar" id="complete-bar" style="width:0%;background:var(--gold)"></div></div>
       </div>
+      <div class="summary-card gold" style="border-left-color:#7B4FBF">
+        <div class="label">全校繳交率<br>Overall Submission Rate</div>
+        <div class="number" style="color:#7B4FBF"><span id="rate-count">—</span><span class="denom">%</span></div>
+        <div class="progress-bar-wrap"><div class="progress-bar" id="rate-bar" style="width:0%;background:#7B4FBF"></div></div>
+      </div>
     </div>
 
     <div class="table-wrap">
       <table id="submission-table">
         <thead>
           <tr>
-            <th>單位 / Unit</th>
+            <th>單位<br><span style="font-weight:400;opacity:0.85">Department/Office</span></th>
             <th class="center">個資清冊（Excel）<br>Inventory Form (Excel)</th>
             <th class="center">個資清冊（紙本）<br>Inventory Form (Hard Copy)</th>
             <th class="center">自我檢查表（紙本）<br>Self-Assessment (Hard Copy)</th>
             <th class="center">HRO 收件日期<br>Date Received by HRO</th>
-            <th>備註 / Remarks</th>
+            <th>備註<br><span style="font-weight:400;opacity:0.85">Remarks</span></th>
           </tr>
         </thead>
         <tbody id="submission-tbody">
@@ -482,14 +487,14 @@
     <div class="review-notice">
       <strong>📌 說明 / Notice</strong><br>
       本預約表僅顯示該處室已跟 Sam 確認複盤時間之名單，每次預計先以半小時為主。<br>
-      This schedule only displays units that have <strong>confirmed</strong> their review appointment with Sam. Each session is approximately <strong>30 minutes</strong>.<br><br>
+      This schedule only displays departments/offices that have <strong>confirmed</strong> their review appointment with Sam. Each session is approximately <strong>30 minutes</strong>.<br><br>
       <span class="red-note">⚠️ 月曆中以紅色標示之日期請勿預約。</span><br>
       <span class="red-note">Please do not schedule appointments on dates highlighted in red on the calendar.</span>
     </div>
 
     <div class="review-section">
       <div class="review-list">
-        <div class="review-list-header">📋 已確認複盤時間之處室 / Units with Confirmed Review Appointments</div>
+        <div class="review-list-header">📋 已確認複盤時間之處室 / Departments/Offices with Confirmed Review Appointments</div>
         <div id="review-list-body">
           <div class="review-empty">資料載入中… Loading…</div>
         </div>
@@ -686,6 +691,9 @@ function renderSubmission(data) {
   setCard('paper-count','paper-denom','paper-bar', paperC);
   setCard('check-count','check-denom','check-bar', checkC);
   setCard('complete-count','complete-denom','complete-bar', completeC, 'gold');
+  const rate = total > 0 ? Math.round(completeC/total*100) : 0;
+  document.getElementById('rate-count').textContent = rate;
+  document.getElementById('rate-bar').style.width = rate + '%';
 }
 
 function si(val) {
