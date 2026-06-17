@@ -158,6 +158,9 @@
   table { width: 100%; min-width: 750px; border-collapse: collapse; }
   thead tr { background: var(--navy); color: var(--white); }
   thead th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
     padding: 13px 14px;
     text-align: left;
     font-size: 0.76rem;
@@ -459,12 +462,12 @@
       <table id="submission-table">
         <thead>
           <tr>
-            <th>單位<br><span style="font-weight:400;opacity:0.85">Department/Office</span></th>
+            <th>單位<br><span style="font-weight:700;">Department/Office</span></th>
             <th class="center">個資清冊（Excel）<br>Inventory Form (Excel)</th>
             <th class="center">個資清冊（紙本）<br>Inventory Form (Hard Copy)</th>
             <th class="center">自我檢查表（紙本）<br>Self-Assessment (Hard Copy)</th>
             <th class="center">HRO 收件日期<br>Date Received by HRO</th>
-            <th>備註<br><span style="font-weight:400;opacity:0.85">Remarks</span></th>
+            <th>備註<br><span style="font-weight:700;">Remarks</span></th>
           </tr>
         </thead>
         <tbody id="submission-tbody">
